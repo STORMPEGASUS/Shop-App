@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/screens/products_overview_screen.dart';
 
@@ -9,7 +11,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'MyShop',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.cyan,
+        accentColor: Color.fromARGB(255, 245, 40, 40),
+        fontFamily: 'Lato',
       ),
       home: ProductOverviewScreen(),
     );
