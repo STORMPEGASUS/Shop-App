@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         title: 'MyShop',
         theme: ThemeData(
           primarySwatch: Colors.cyan,
-          accentColor: Color.fromARGB(255, 245, 40, 40),
+          accentColor: Color.fromARGB(255, 253, 30, 30),
           fontFamily: 'Lato',
         ),
         home: ProductOverviewScreen(),
