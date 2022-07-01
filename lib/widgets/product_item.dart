@@ -1,15 +1,20 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/providers/product.dart';
 import 'package:flutter_complete_guide/screens/product_detail_screen.dart';
+import 'package:provider/provider.dart';
 
 class ProductItem extends StatelessWidget {
-  final String title;
-  final String id;
-  final String imageurl;
+  // final String title;
+  // final String id;
+  // final String imageurl;
 
-  ProductItem(this.title, this.id, this.imageurl);
+  // ProductItem(this.title, this.id, this.imageurl);
 
   @override
   Widget build(BuildContext context) {
+    final providerProduct = Provider.of<Product>(context, listen: false);
     return Material(
       borderRadius: BorderRadius.circular(10),
       elevation: 10,
@@ -18,22 +23,31 @@ class ProductItem extends StatelessWidget {
         child: GridTile(
           child: GestureDetector(
             onTap: () {
-              Navigator.of(context).pushNamed(ProductDetailScreen.routename,arguments: id);
+              Navigator.of(context).pushNamed(ProductDetailScreen.routename,
+                  arguments: providerProduct.id);
             },
             child: Image.network(
-              imageurl,
+              providerProduct.imageurl,
               fit: BoxFit.cover,
             ),
           ),
           footer: GridTileBar(
             backgroundColor: Colors.black87,
-            leading: IconButton(
-              color: Color.fromARGB(255, 255, 17, 0),
-              icon: Icon(Icons.favorite),
-              onPressed: () {},
+            leading: Consumer<Product>(
+              builder: (context, value, _) => IconButton(
+                color: Color.fromARGB(255, 255, 17, 0),
+                icon: Icon(
+                  providerProduct.isfavorite
+                      ? Icons.favorite
+                      : Icons.favorite_border,
+                ),
+                onPressed: () {
+                  providerProduct.togglestatus();
+                },
+              ),
             ),
             title: Text(
-              title,
+              providerProduct.title,
               textAlign: TextAlign.center,
             ),
             trailing: IconButton(
