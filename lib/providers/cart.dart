@@ -1,4 +1,4 @@
-import 'dart:math';
+
 
 import 'package:flutter/foundation.dart';
 
@@ -17,10 +17,14 @@ class CartItem {
 }
 
 class Cart with ChangeNotifier {
-  Map<String, CartItem> _items;
+  Map<String, CartItem> _items={};
 
   Map<String, CartItem> get items {
     return {...items};
+  }
+
+  int get itemCount {
+    return  _items.length;
   }
 
   void additem(
@@ -38,8 +42,7 @@ class Cart with ChangeNotifier {
           price: existingitem.price,
         ),
       );
-    } 
-    else {
+    } else {
       _items.putIfAbsent(
         productId,
         () => CartItem(
@@ -50,5 +53,6 @@ class Cart with ChangeNotifier {
         ),
       );
     }
+    notifyListeners();
   }
 }
