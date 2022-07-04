@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter_complete_guide/providers/products_provider.dart';
+import 'package:flutter_complete_guide/screens/cart_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/screens/product_detail_screen.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         home: ProductOverviewScreen(),
         routes: {
           ProductDetailScreen.routename: (ctx) => ProductDetailScreen(),
+          CartScreen.routename: (ctx) => CartScreen(),
         },
       ),
     );
