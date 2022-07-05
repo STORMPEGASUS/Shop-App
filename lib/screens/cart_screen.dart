@@ -1,12 +1,13 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/providers/orders.dart';
 import '../providers/cart.dart';
 import '../widgets/cartItem.dart' as ci;
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatelessWidget {
-  static const routename ='/cart';
+  static const routename = '/cart';
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +35,17 @@ class CartScreen extends StatelessWidget {
                   ),
                   Spacer(),
                   Chip(
-                    label: Text('Rs:${cart.totalamount}'),
+                    label: Text('Rs:${cart.totalamount.toStringAsFixed(2)}'),
                     backgroundColor: Color.fromARGB(255, 0, 255, 213),
                   ),
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Provider.of<Orders>(context, listen: false).addOrder(
+                        cart.items.values.toList(),
+                        cart.totalamount,
+                      );
+                      cart.clearCartAfterorder();
+                    },
                     child: Text(
                       'ORDER NOW',
                     ),

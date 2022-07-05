@@ -1,6 +1,8 @@
 // ignore_for_file: deprecated_member_use
+import 'package:flutter_complete_guide/providers/orders.dart';
 import 'package:flutter_complete_guide/providers/products_provider.dart';
 import 'package:flutter_complete_guide/screens/cart_screen.dart';
+import 'package:flutter_complete_guide/screens/orders_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/screens/product_detail_screen.dart';
@@ -20,7 +22,10 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => Cart(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => Orders(),
+        ),
       ],
       child: MaterialApp(
         title: 'MyShop',
@@ -33,6 +38,7 @@ class MyApp extends StatelessWidget {
         routes: {
           ProductDetailScreen.routename: (ctx) => ProductDetailScreen(),
           CartScreen.routename: (ctx) => CartScreen(),
+          OrdersScreen.routename:(context) =>OrdersScreen(), 
         },
       ),
     );
