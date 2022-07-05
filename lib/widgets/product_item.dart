@@ -1,4 +1,4 @@
-
+// ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/providers/cart.dart';
@@ -57,6 +57,21 @@ class ProductItem extends StatelessWidget {
               onPressed: () {
                 cart.additem(providerProduct.id, providerProduct.price,
                     providerProduct.title);
+                Scaffold.of(context).removeCurrentSnackBar();
+                Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'Added item to cart!',
+                    ),
+                    duration: Duration(seconds: 2),
+                    action: SnackBarAction(
+                      label: 'UNDO',
+                      onPressed: () {
+                        cart.removesingleitem(providerProduct.id);
+                      },
+                    ),
+                  ),
+                );
               },
               icon: Icon(Icons.shopping_cart),
             ),

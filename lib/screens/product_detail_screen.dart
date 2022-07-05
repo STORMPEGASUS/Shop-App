@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/providers/products_provider.dart';
+import 'package:flutter_complete_guide/providers/products.dart';
+
 import 'package:provider/provider.dart';
 
 class ProductDetailScreen extends StatelessWidget {
@@ -15,7 +16,7 @@ class ProductDetailScreen extends StatelessWidget {
     final loadedProduct = Provider.of<Products>(
       context,
       listen: false,
-    ).FindbyId(productId);
+    ).findById(productId);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 0, 255, 213),
