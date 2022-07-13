@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 import './product.dart';
+import 'dart:convert';
 
 class Products with ChangeNotifier {
   List<Product> _items = [
@@ -64,17 +65,38 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  void addProduct(Product product) {
-    final prod = Product(
-      id: DateTime.now().toString(),
-      title: product.title,
-      imageurl: product.imageurl,
-      description: product.description,
-      price: product.price,
-    );
-    _items.add(prod);
-    // _items.add(value);
-    notifyListeners();
+  //this function return the future
+  Future<void> addProduct(Product product) {
+    final url = Uri.https(
+        'flutter-project-dba11-default-rtdb.asia-southeast1.firebasedatabase.app',
+        '/products.json');
+    return http
+        .post(
+      url,
+      body: json.encode({
+        'title': product.title,
+        'description': product.description,
+        'imageurl': product.imageurl,
+        'price': product.price,
+        'isfavorite': product.isfavorite,
+      }),
+    )
+        .then((response) {
+      //this return the future it means it will execute only when the above code is executed.
+      final prod = Product(
+        id: json.decode(
+            response.body)['name'], //giving database id to the product id.
+        title: product.title,
+        imageurl: product.imageurl,
+        description: product.description,
+        price: product.price,
+      );
+      _items.add(prod);
+      // _items.add(value);
+      notifyListeners();
+    }).catchError((error) {
+      throw error;
+    });
   }
 
   void UpdateProduct(String id, Product newproduct) {
