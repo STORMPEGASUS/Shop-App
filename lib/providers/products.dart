@@ -66,23 +66,21 @@ class Products with ChangeNotifier {
   // }
 
   //this function return the future
-  Future<void> addProduct(Product product) {
+  Future<void> addProduct(Product product) async {
     final url = Uri.https(
         'flutter-project-dba11-default-rtdb.asia-southeast1.firebasedatabase.app',
         '/products.json');
-    return http
-        .post(
-      url,
-      body: json.encode({
-        'title': product.title,
-        'description': product.description,
-        'imageurl': product.imageurl,
-        'price': product.price,
-        'isfavorite': product.isfavorite,
-      }),
-    )
-        .then((response) {
-      //this return the future it means it will execute only when the above code is executed.
+    try {
+      final response = await http.post(
+        url,
+        body: json.encode({
+          'title': product.title,
+          'description': product.description,
+          'imageurl': product.imageurl,
+          'price': product.price,
+          'isfavorite': product.isfavorite,
+        }),
+      );
       final prod = Product(
         id: json.decode(
             response.body)['name'], //giving database id to the product id.
@@ -94,9 +92,26 @@ class Products with ChangeNotifier {
       _items.add(prod);
       // _items.add(value);
       notifyListeners();
-    }).catchError((error) {
+    } catch (error) {
       throw error;
-    });
+    }
+
+    // .then((response) {
+    //this return the future it means it will execute only when the above code is executed.
+    // final prod = Product(
+    //   id: json.decode(
+    //       response.body)['name'], //giving database id to the product id.
+    //   title: product.title,
+    //   imageurl: product.imageurl,
+    //   description: product.description,
+    //   price: product.price,
+    // );
+    // _items.add(prod);
+    // // _items.add(value);
+    // notifyListeners();
+    //}).catchError((error) {
+    //  throw error;
+    // });
   }
 
   void UpdateProduct(String id, Product newproduct) {
@@ -107,6 +122,13 @@ class Products with ChangeNotifier {
     } else {
       print('...');
     }
+  }
+
+  Future<void> fetchdataProduct() async {
+    final url = Uri.https(
+        'flutter-project-dba11-default-rtdb.asia-southeast1.firebasedatabase.app',
+        '/products.json');
+    http.get(url);
   }
 
   void deleteproduct(String id) {
