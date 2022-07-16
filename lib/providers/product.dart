@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Product with ChangeNotifier {
   final String id;
@@ -17,8 +20,27 @@ class Product with ChangeNotifier {
     this.isfavorite = false,
   });
 
-  void togglestatus() {
+  Future<void> togglestatus() async {
+    final oldstatus = isfavorite;
+
     isfavorite = !isfavorite;
     notifyListeners();
+    final url = Uri.https(
+        'flutter-project-dba11-default-rtdb.asia-southeast1.firebasedatabase.app',
+        '/products/$id.json');
+    try {
+      final response = await http.patch(url,
+          body: json.encode({
+            'isfavorite': isfavorite,
+          }));
+      if (response.statusCode >= 400) {
+        isfavorite = oldstatus;
+        notifyListeners();
+      }
+    } catch (error) {
+      isfavorite = oldstatus;
+               
+      notifyListeners();
+    }
   }
 }

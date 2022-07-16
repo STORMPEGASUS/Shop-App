@@ -45,6 +45,14 @@ class ProductItem extends StatelessWidget {
                 ),
                 onPressed: () {
                   providerProduct.togglestatus();
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Added to favorites ',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  );
                 },
               ),
             ),
