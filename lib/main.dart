@@ -1,7 +1,9 @@
 // ignore_for_file: deprecated_member_use
+import 'package:flutter_complete_guide/providers/auth.dart';
 import 'package:flutter_complete_guide/providers/orders.dart';
 
 import 'package:flutter_complete_guide/providers/products.dart';
+import 'package:flutter_complete_guide/screens/auth_screen.dart';
 
 import 'package:flutter_complete_guide/screens/cart_screen.dart';
 import 'package:flutter_complete_guide/screens/edit_product_screen.dart';
@@ -22,6 +24,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
+          create: (context) => Auth(),
+        ),
+        ChangeNotifierProvider(
           create: (context) => Products(),
         ),
         ChangeNotifierProvider(
@@ -38,7 +43,7 @@ class MyApp extends StatelessWidget {
           accentColor: Color.fromARGB(255, 253, 30, 30),
           fontFamily: 'Lato',
         ),
-        home: ProductOverviewScreen(),
+        home: AuthScreen(),
         routes: {
           ProductDetailScreen.routename: (context) => ProductDetailScreen(),
           CartScreen.routename: (context) => CartScreen(),
