@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, duplicate_ignore
+
 import 'package:flutter_complete_guide/models/httpException.dart';
 import 'package:flutter_complete_guide/providers/auth.dart';
 import 'package:provider/provider.dart';
@@ -220,6 +222,8 @@ class _AuthCardState extends State<AuthCard> {
                   validator: (value) {
                     if (value.isEmpty || value.length < 5) {
                       return 'Password is too short!';
+                    } else {
+                      return null;
                     }
                   },
                   onSaved: (value) {
@@ -235,6 +239,8 @@ class _AuthCardState extends State<AuthCard> {
                         ? (value) {
                             if (value != _passwordController.text) {
                               return 'Passwords do not match!';
+                            } else {
+                              return null;
                             }
                           }
                         : null,
