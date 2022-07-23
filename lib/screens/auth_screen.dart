@@ -144,7 +144,7 @@ class _AuthCardState extends State<AuthCard> {
       }
       _showErrorDailog(errormessage);
     } catch (error) {
-      final errormessage = 'Could not authenticate you.Please try again later.';
+      const errormessage = 'Could not authenticate you.Please try again later.';
       _showErrorDailog(errormessage);
     }
 
