@@ -5,51 +5,13 @@ import './product.dart';
 import 'dart:convert';
 
 class Products with ChangeNotifier {
-  List<Product> _items = [
-    // Product(
-    //   id: 'p1',
-    //   title: 'Red Shirt',
-    //   description: 'A red shirt - it is pretty red!',
-    //   price: 29.99,
-    //   imageurl:
-    //       'https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg',
-    // ),
-    // Product(
-    //   id: 'p2',
-    //   title: 'Trousers',
-    //   description: 'A nice pair of trousers.',
-    //   price: 59.99,
-    //   imageurl:
-    //       'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Trousers%2C_dress_%28AM_1960.022-8%29.jpg/512px-Trousers%2C_dress_%28AM_1960.022-8%29.jpg',
-    // ),
-    // Product(
-    //   id: 'p3',
-    //   title: 'Yellow Scarf',
-    //   description: 'Warm and cozy - exactly what you need for the winter.',
-    //   price: 19.99,
-    //   imageurl:
-    //       'https://live.staticflickr.com/4043/4438260868_cc79b3369d_z.jpg',
-    // ),
-    // Product(
-    //   id: 'p4',
-    //   title: 'A Pan',
-    //   description: 'Prepare any meal you want.',
-    //   price: 49.99,
-    //   imageurl:
-    //       'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
-    // ),
-  ];
-  // var _showFavoritesOnly = false;
+  List<Product> _items = [];
 
   final String authToken;
-
-  Products(this.authToken,this._items);
-
+  final String userId;
+  Products(this.authToken, this.userId, this._items);
 
   List<Product> get items {
-    // if (_showFavoritesOnly) {
-    //   return _items.where((prodItem) => prodItem.isFavorite).toList();
-    // }
     return [..._items];
   }
 
@@ -60,16 +22,6 @@ class Products with ChangeNotifier {
   Product findById(String id) {
     return _items.firstWhere((prod) => prod.id == id);
   }
-
-  // void showFavoritesOnly() {
-  //   _showFavoritesOnly = true;
-  //   notifyListeners();
-  // }
-
-  // void showAll() {
-  //   _showFavoritesOnly = false;
-  //   notifyListeners();
-  // }
 
   //this function return the future
   Future<void> addProduct(Product product) async {
@@ -83,7 +35,7 @@ class Products with ChangeNotifier {
           'description': product.description,
           'imageurl': product.imageurl,
           'price': product.price,
-          'isfavorite': product.isfavorite,
+          'userId':userId,
         }),
       );
       final prod = Product(
@@ -100,23 +52,6 @@ class Products with ChangeNotifier {
     } catch (error) {
       throw error;
     }
-
-    // .then((response) {
-    //this return the future it means it will execute only when the above code is executed.
-    // final prod = Product(
-    //   id: json.decode(
-    //       response.body)['name'], //giving database id to the product id.
-    //   title: product.title,
-    //   imageurl: product.imageurl,
-    //   description: product.description,
-    //   price: product.price,
-    // );
-    // _items.add(prod);
-    // // _items.add(value);
-    // notifyListeners();
-    //}).catchError((error) {
-    //  throw error;
-    // });
   }
 
   Future<void> UpdateProduct(String id, Product newproduct) async {
@@ -140,7 +75,8 @@ class Products with ChangeNotifier {
 
 //whenever we use async we should await for the part which may return value after some time
   Future<void> fetchdataProduct() async {
-    final url = Uri.parse('https://flutter-project-dba11-default-rtdb.asia-southeast1.firebasedatabase.app/products.json?auth=$authToken');
+    var url = Uri.parse(
+        'https://flutter-project-dba11-default-rtdb.asia-southeast1.firebasedatabase.app/products.json?auth=$authToken');
 
     try {
       final response = await http.get(url);
@@ -149,6 +85,12 @@ class Products with ChangeNotifier {
       if (extractedData == null) {
         return;
       }
+
+      url = Uri.parse(
+        'https://flutter-project-dba11-default-rtdb.asia-southeast1.firebasedatabase.app/UserFavorites/$userId.json?auth=$authToken',
+      );
+      final favoriteResponse = await http.get(url);
+      final favoritedata = json.decode(favoriteResponse.body);
       extractedData.forEach((prodid, proddata) {
         loadedProduct.add(
           Product(
@@ -157,7 +99,7 @@ class Products with ChangeNotifier {
             description: proddata['description'],
             price: proddata['price'],
             imageurl: proddata['imageurl'],
-            isfavorite: proddata['isfavorite'],
+            isfavorite:favoritedata==null?false:favoritedata[prodid]??false,
           ),
         );
       });

@@ -46,7 +46,10 @@ class ProductItem extends StatelessWidget {
                       : Icons.favorite_border,
                 ),
                 onPressed: () {
-                  providerProduct.togglestatus(authdata.token);
+                  providerProduct.togglestatus(
+                    authdata.token,
+                    authdata.userId,
+                  );
                   Scaffold.of(context).showSnackBar(
                     SnackBar(
                       content: Text(

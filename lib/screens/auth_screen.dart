@@ -23,8 +23,8 @@ class AuthScreen extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color.fromARGB(255, 53, 249, 112).withOpacity(0.5),
-                  Color.fromARGB(255, 37, 96, 155).withOpacity(0.9),
+                  Color.fromARGB(255, 53, 249, 112).withOpacity(1.0),
+                  Color.fromARGB(255, 59, 121, 183).withOpacity(0.1),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -42,20 +42,20 @@ class AuthScreen extends StatelessWidget {
                 children: <Widget>[
                   Flexible(
                     child: Container(
-                      margin: EdgeInsets.only(bottom: 20.0),
+                      margin: EdgeInsets.only(bottom: 50.0),
                       padding:
                           EdgeInsets.symmetric(vertical: 8.0, horizontal: 94.0),
                       //transform: Matrix4.rotationZ(-8 * pi / 180)
                       //..translate(-10.0),
                       // ..translate(-10.0),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Color.fromARGB(184, 35, 196, 156),
+                        borderRadius: BorderRadius.circular(50),
+                        color: Color.fromARGB(184, 51, 229, 184),
                         boxShadow: [
                           BoxShadow(
                             blurRadius: 8,
-                            color: Color.fromARGB(255, 79, 223, 236),
-                            offset: Offset(0, 5),
+                            color: Color.fromARGB(255, 4, 4, 4),
+                            offset: Offset(0, 2),
                           )
                         ],
                       ),
@@ -72,6 +72,7 @@ class AuthScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  
                   Flexible(
                     flex: deviceSize.width > 600 ? 2 : 1,
                     child: AuthCard(),
