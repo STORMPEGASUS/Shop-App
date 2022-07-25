@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/providers/auth.dart';
 import 'package:flutter_complete_guide/providers/cart.dart';
 import 'package:flutter_complete_guide/providers/product.dart';
 import 'package:flutter_complete_guide/screens/product_detail_screen.dart';
@@ -17,6 +18,7 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final providerProduct = Provider.of<Product>(context, listen: false);
     final cart = Provider.of<Cart>(context);
+    final authdata = Provider.of<Auth>(context, listen: false);
     return Material(
       borderRadius: BorderRadius.circular(10),
       elevation: 10,
@@ -44,7 +46,7 @@ class ProductItem extends StatelessWidget {
                       : Icons.favorite_border,
                 ),
                 onPressed: () {
-                  providerProduct.togglestatus();
+                  providerProduct.togglestatus(authdata.token);
                   Scaffold.of(context).showSnackBar(
                     SnackBar(
                       content: Text(

@@ -26,25 +26,27 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => Auth(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => Products(),
+        ChangeNotifierProxyProvider<Auth, Products>(
+          update: (context, auth, previousProduct) => Products(
+              auth.token, previousProduct == null ? [] : previousProduct.items),
         ),
         ChangeNotifierProvider(
           create: (context) => Cart(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => Orders(),
+        ChangeNotifierProxyProvider<Auth, Orders>(
+          update: (context, auth, previousOrders) => Orders(
+              auth.token, previousOrders == null ? [] : previousOrders.orders),
         ),
       ],
       child: Consumer<Auth>(
-        builder: (context,auth, _) => MaterialApp(
+        builder: (context, auth, _) => MaterialApp(
           title: 'MyShop',
           theme: ThemeData(
             primarySwatch: Colors.cyan,
             accentColor: Color.fromARGB(255, 253, 30, 30),
             fontFamily: 'Lato',
           ),
-          home: auth.isAuth ? ProductOverviewScreen():AuthScreen(),
+          home: auth.isAuth ? ProductOverviewScreen() : AuthScreen(),
           routes: {
             ProductDetailScreen.routename: (context) => ProductDetailScreen(),
             CartScreen.routename: (context) => CartScreen(),

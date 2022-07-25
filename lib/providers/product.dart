@@ -20,14 +20,13 @@ class Product with ChangeNotifier {
     this.isfavorite = false,
   });
 
-  Future<void> togglestatus() async {
+  Future<void> togglestatus(String token) async {
     final oldstatus = isfavorite;
 
     isfavorite = !isfavorite;
     notifyListeners();
-    final url = Uri.https(
-        'flutter-project-dba11-default-rtdb.asia-southeast1.firebasedatabase.app',
-        '/products/$id.json');
+    final url = Uri.parse(
+        'https://flutter-project-dba11-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id.json?auth=$token');
     try {
       final response = await http.patch(url,
           body: json.encode({
