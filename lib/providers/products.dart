@@ -35,7 +35,7 @@ class Products with ChangeNotifier {
           'description': product.description,
           'imageurl': product.imageurl,
           'price': product.price,
-          'userId':userId,
+          'userId': userId,
         }),
       );
       final prod = Product(
@@ -74,9 +74,11 @@ class Products with ChangeNotifier {
   }
 
 //whenever we use async we should await for the part which may return value after some time
-  Future<void> fetchdataProduct() async {
+  Future<void> fetchdataProduct([bool filterByuser = false]) async {
+    final filterString =
+        filterByuser ?'orderBy="userId"&equalTo="$userId"' :'';
     var url = Uri.parse(
-        'https://flutter-project-dba11-default-rtdb.asia-southeast1.firebasedatabase.app/products.json?auth=$authToken');
+        'https://flutter-project-dba11-default-rtdb.asia-southeast1.firebasedatabase.app/products.json?auth=$authToken&$filterString');
 
     try {
       final response = await http.get(url);
@@ -99,7 +101,8 @@ class Products with ChangeNotifier {
             description: proddata['description'],
             price: proddata['price'],
             imageurl: proddata['imageurl'],
-            isfavorite:favoritedata==null?false:favoritedata[prodid]??false,
+            isfavorite:
+                favoritedata == null ? false : favoritedata[prodid] ?? false,
           ),
         );
       });
