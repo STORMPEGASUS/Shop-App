@@ -1,16 +1,23 @@
-# fourth_app
+# SHOP APP
 
-A new Flutter project.
+A  Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This App help buyers to buy wearables and seller to sell their handcrafted art !!!!
 
-A few resources to get you started if this is your first Flutter project:
+## Tech Stack
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+-FLUTTER
+-DART
+-FIREBASE
+-REST API
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+Here is the detailed video of this app.
+
+
+
+https://user-images.githubusercontent.com/84672906/198892725-a33c57b1-11e5-48db-8c04-efc784058926.mp4
+
